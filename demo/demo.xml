@@ -1,0 +1,131 @@
+<odoo>
+    <data noupdate="0">
+
+        <!--NOTES-->
+        <record id="note1" model="reunions.nota">
+            <field name="name">Team Project Kickoff</field>
+            <field name="descripcio">Meeting to discuss and plan the kickoff of the new project. Agenda includes
+                assigning roles, setting milestones, and defining project scope.
+            </field>
+        </record>
+
+        <record id="note2" model="reunions.nota">
+            <field name="name">Client Presentation</field>
+            <field name="descripcio">Preparation for upcoming client presentation. Topics to cover: project updates,
+                budget overview, and addressing client concerns.
+            </field>
+        </record>
+
+        <record id="note3" model="reunions.nota">
+            <field name="name">Brainstorming Session</field>
+            <field name="descripcio">Interactive session to generate creative ideas for upcoming projects. All team
+                members are encouraged to participate and contribute.
+            </field>
+        </record>
+
+        <record id="note4" model="reunions.nota">
+            <field name="name">Quarterly Review</field>
+            <field name="descripcio">Review and analyze the team's performance over the past quarter. Identify areas for
+                improvement and discuss strategies for the next quarter.
+            </field>
+        </record>
+
+
+        <!--SALES-->
+        <record id="sala_a" model="reunions.sala">
+            <field name="name">Sala A</field>
+            <field name="capacitat">20</field>
+            <field name="ubicacio">Main Building, Floor 1</field>
+        </record>
+
+        <record id="sala_b" model="reunions.sala">
+            <field name="name">Sala B</field>
+            <field name="capacitat">15</field>
+            <field name="ubicacio">Annex, Floor 2</field>
+        </record>
+
+        <record id="sala_c" model="reunions.sala">
+            <field name="name">Sala C</field>
+            <field name="capacitat">25</field>
+            <field name="ubicacio">Main Building, Floor 3</field>
+        </record>
+
+        <record id="sala_d" model="reunions.sala">
+            <field name="name">Sala D</field>
+            <field name="capacitat">18</field>
+            <field name="ubicacio">Annex, Floor 1</field>
+        </record>
+
+        <!--ORGANITZADOR ID-->
+        <record id="organizer_john_doe" model="hr.employee">
+            <field name="name">hola</field>
+        </record>
+
+<!--        <record id="organizer_john_doe" model="hr.employee">-->
+<!--            <field name="name" ref="Audrey Peterson"/>-->
+<!--        </record>-->
+
+
+        <!--PARTICIPANTS-->
+        <record id="participant_jane_doe" model="hr.employee">
+            <field name="name">Jane Doe</field>
+            <field name="work_email">test</field>
+            <field name="job_title">test</field>
+        </record>
+
+        <record id="participant_bob_smith" model="hr.employee">
+            <field name="name">test2</field>
+        </record>
+
+        <!--REUNIONS-->
+        <record id="meeting1" model="reunions.reunio">
+            <field name="id_organitzador" ref="organizer_john_doe"/>
+            <field name="name">Team Status Update</field>
+            <field name="descripcio">Review team progress and address any issues</field>
+            <field name="data_inici" eval="(datetime.now())"/>
+            <field name="data_finalitzacio" eval="(datetime.now() + timedelta(hours=4))"/>
+            <field name="participants" eval="[(6, 0, [ref('participant_jane_doe'), ref('participant_bob_smith')])]"/>
+            <field name="sala" ref="sala_a"/>
+            <field name="notes" eval="[(6, 0, [ref('note1'), ref('note4')])]"/>
+            <field name="urgent">False</field>
+            <field name="objectiu">Discuss team achievements and challenges</field>
+            <field name="tipus">intern</field>
+            <field name="estat">planificada</field>
+        </record>
+
+        <record id="meeting2" model="reunions.reunio">
+            <field name="id_organitzador" ref="organizer_john_doe"/>
+            <field name="name">Client Strategy Session</field>
+            <field name="descripcio">Collaborative session to strategize and align on client engagement
+                approaches.Discuss client expectations and project roadmap.
+            </field>
+            <field name="data_inici" eval="'2024-02-07 09:00:00'"/>
+            <field name="data_finalitzacio" eval="'2024-02-07 12:00:00'"/>
+            <field name="participants" eval="[(6, 0, [ref('participant_jane_doe'), ref('participant_bob_smith')])]"/>
+            <field name="sala" ref="sala_c"/>
+            <field name="notes" eval="[(6, 0, [ref('note2')])]"/>
+            <field name="urgent">True</field>
+            <field name="objectiu">Align on client strategy and project deliverables</field>
+            <field name="tipus">extern</field>
+            <field name="estat">en_curs</field>
+        </record>
+
+        <record id="meeting3" model="reunions.reunio">
+            <field name="id_organitzador" ref="organizer_john_doe"/>
+            <field name="name">Product Launch Planning</field>
+            <field name="descripcio">Detailed planning session for the upcoming product launch. Assign tasks, discuss
+                marketing strategies, and finalize launch timeline.
+            </field>
+            <field name="data_inici" eval="'2024-02-07 08:00:00'"/>
+            <field name="data_finalitzacio" eval="'2024-02-10 10:00:00'"/>
+            <field name="participants" eval="[(6, 0, [ref('participant_jane_doe')])]"/>
+            <field name="sala" ref="sala_b"/>
+            <field name="notes" eval="[(6, 0, [ref('note3')])]"/>
+            <field name="urgent">False</field>
+            <field name="objectiu">Ensure a successful product launch</field>
+            <field name="tipus">extern</field>
+            <field name="estat">concluida</field>
+        </record>
+
+    </data>
+</odoo>

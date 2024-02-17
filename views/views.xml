@@ -1,0 +1,281 @@
+<odoo>
+    <data noupdate="0">
+        <!-- REUNIONS VIEW -->
+        <record model="ir.ui.view" id="reunions_list">
+            <field name="name">Reunions list</field>
+            <field name="model">reunions.reunio</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="data_inici"/>
+                    <field name="data_finalitzacio"/>
+                    <field name="id_organitzador"/>
+                    <field name="sala"/>
+                    <field name="estat"/>
+                    <field name="urgent" widget="boolean_toggle"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- REUNIONS FORM VIEW -->
+        <record model="ir.ui.view" id="reunions_form">
+            <field name="name">Reunions Form View</field>
+            <field name="model">reunions.reunio</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="name"/>
+                        <field name="id_empresa"/>
+                        <field name="id_organitzador" widget="many2one_avatar_user"/>
+                        <field name="descripcio"/>
+                        <field name="data_inici"/>
+                        <field name="data_finalitzacio"/>
+                        <field name="urgent" widget="boolean_toggle"/>
+                        <field name="participants"/>
+                        <field name="sala"/>
+                        <field name="notes" widget="many2many_tags"/>
+                        <field name="objectiu"/>
+                    </group>
+                    <group>
+                        <field name="tipus" widget="selection"/>
+                        <field name="estat" widget="selection"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <!-- REUNIONS CALENDAR VIEW -->
+        <record model="ir.ui.view" id="reunions_calendar">
+            <field name="name">Reunions Calendar</field>
+            <field name="model">reunions.reunio</field>
+            <field name="arch" type="xml">
+                <calendar string="Reunions Calendar" date_start="data_inici" date_stop="data_finalitzacio" color="estat"
+                          mode="month">
+                    <field name="name"/>
+                    <field name="id_organitzador"/>
+                    <field name="sala"/>
+                </calendar>
+            </field>
+        </record>
+
+        <!-- REUNIONS KANBAN VIEW -->
+        <record id="reunions_kanban" model="ir.ui.view">
+            <field name="name">Reunions Kanban</field>
+            <field name="model">reunions.reunio</field>
+            <field name="priority">10</field>
+            <field name="arch" type="xml">
+                <kanban default_group_by="estat" class="o_kanban_small_column o_opportunity_kanban"
+                        on_create="quick_create" quick_create_view="reunions_form"
+                        archivable="false" sample="1">
+
+                    <field name="estat"/>
+                    <field name="name"/>
+                    <progressbar field="estat"
+                                 colors="{&quot;planificada&quot;: &quot;success&quot;, &quot;en_curs&quot;: &quot;warning&quot;, &quot;concluida&quot;: &quot;danger&quot;}"
+                                 sum_field="id" recurring_revenue_sum_field="id"/>
+                    <templates>
+                        <t t-name="kanban-menu">
+                            <t t-if="widget.editable">
+                                <a role="menuitem" type="edit" class="dropdown-item">Edit</a>
+                            </t>
+                            <t t-if="widget.deletable">
+                                <a role="menuitem" type="delete" class="dropdown-item">Delete</a>
+                            </t>
+                        </t>
+
+                        <t t-name="kanban-box">
+                            <div t-attf-class="#{!selection_mode ? kanban_color() : ''} #{lost_ribbon ? 'oe_kanban_card_ribbon' : ''} oe_kanban_global_click oe_kanban_card d-flex flex-column">
+
+                                <div class="oe_kanban_content flex-grow-1">
+                                    <div class="oe_kanban_details">
+                                        <strong class="o_kanban_record_title">
+                                            <field name="name"/>
+                                        </strong>
+                                    </div>
+                                    <div class="o_kanban_record_subtitle">
+                                        <t>
+                                            Data inici:
+                                            <field name="data_inici"/>
+                                        </t>
+                                    </div>
+                                    <div>
+                                        <t>
+                                            Data finalització:
+                                            <field name="data_finalitzacio"/>
+                                        </t>
+                                    </div>
+                                    <div>
+                                        <field name="notes" widget="many2many_tags"/>
+                                    </div>
+                                </div>
+                                <div class="oe_kanban_footer">
+                                    <div class="o_kanban_record_bottom">
+                                        <div class="oe_kanban_bottom_left">
+                                            <field name="tipus"/>
+                                        </div>
+                                        <div class="oe_kanban_bottom_right">
+                                            <field name="id_organitzador" widget="many2one_avatar_user"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix"/>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+
+        <!-- ACTIONS FOR REUNIONS -->
+        <record model="ir.actions.act_window" id="reunions.action_window">
+            <field name="name">Reunions List</field>
+            <field name="res_model">reunions.reunio</field>
+            <field name="view_mode">tree,form,calendar,kanban</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="reunions.reunio_calendar_action_window">
+            <field name="name">Reunions Calendar</field>
+            <field name="res_model">reunions.reunio</field>
+            <field name="view_mode">calendar</field>
+        </record>
+
+        <!-- SALA VIEW -->
+        <record model="ir.ui.view" id="sala_list">
+            <field name="name">Sales</field>
+            <field name="model">reunions.sala</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="capacitat"/>
+                    <field name="ubicacio"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- SALA FORM VIEW -->
+        <record model="ir.ui.view" id="sala_form">
+            <field name="name">Sala Form View</field>
+            <field name="model">reunions.sala</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="name"/>
+                        <field name="capacitat"/>
+                        <field name="ubicacio"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <!-- ACTIONS FOR SALA -->
+        <record model="ir.actions.act_window" id="reunions.sala_action_window">
+            <field name="name">Sala List</field>
+            <field name="res_model">reunions.sala</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+        <!-- NOTA VIEW -->
+        <record model="ir.ui.view" id="nota_list">
+            <field name="name">Notes</field>
+            <field name="model">reunions.nota</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="descripcio"/>
+                    <field name="reunio"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- NOTA SEARCH -->
+        <record model="ir.ui.view" id="nota_list_search">
+            <field name="model">reunions.nota</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="descripcio"/>
+                    <group string="group_by">
+                        <filter name="group_by_reunio" string="reunio" context="{'group_by': 'reunio'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- NOTA FORM VIEW -->
+        <record model="ir.ui.view" id="nota_form">
+            <field name="name">Nota Form View</field>
+            <field name="model">reunions.nota</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="name"/>
+                        <field name="descripcio"/>
+                        <field name="reunio"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <!-- NOTA KANBAN VIEW -->
+        <record model="ir.ui.view" id="nota_kanban">
+            <field name="name">Notes Kanban View</field>
+            <field name="model">reunions.nota</field>
+            <field name="arch" type="xml">
+                <kanban class="o_cook_recipe_kanban">
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click o_kanban_record_has_image_fill o_hr_kanban_record">
+                                <div class="oe_kanban_details">
+                                    <div class="o_kanban_record_top">
+                                        <div class="o_kanban_record_headings">
+                                            <strong class="o_kanban_record_title">
+                                                <field name="name"/>
+                                            </strong>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <field name="descripcio"/>
+                                    </div>
+                                    <strong class="o_kanban_record_title">
+                                        <field name="reunio"/>
+                                    </strong>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <!-- ACTIONS FOR NOTA -->
+        <record model="ir.actions.act_window" id="reunions.nota_action_window">
+            <field name="name">Notes</field>
+            <field name="res_model">reunions.nota</field>
+            <field name="view_mode">tree,form,search,kanban</field>
+        </record>
+
+
+        <!-- Top menu item -->
+
+        <menuitem name="reunions" id="reunions.menu_root"/>
+
+        <!-- menu categories -->
+
+        <menuitem name="Reunions List" id="reunions.menu_1" parent="reunions.menu_root"
+                  action="reunions.action_window"/>
+        <menuitem name="Calendar" id="reunions.calendarMenu_1" parent="reunions.menu_root"
+                  action="reunions.reunio_calendar_action_window"/>
+
+        <menuitem name="Configuration" id="reunions.configurationMenu_1" parent="reunions.menu_root"/>
+        <menuitem name="Sala" id="reunions.salaMenu_1" parent="reunions.configurationMenu_1"
+                  action="reunions.sala_action_window"/>
+        <menuitem name="Notes" id="reunions.notaMenu_1" parent="reunions.configurationMenu_1"
+                  action="reunions.nota_action_window"/>
+
+    </data>
+</odoo>

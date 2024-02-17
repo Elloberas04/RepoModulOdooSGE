@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+master_access_reunions_reunio,reunions.reunio,model_reunions_reunio,group_reunio_master,1,1,1,1
+master_access_reunions_nota,reunions.nota,model_reunions_nota,group_reunio_master,1,1,1,1
+master_access_reunions_sala,reunions.sala,model_reunions_sala,group_reunio_master,1,1,1,1
+manager_access_reunions_reunio,reunions.reunio,model_reunions_reunio,group_reunio_manager,1,1,1,1
+manager_access_reunions_nota,reunions.nota,model_reunions_nota,group_reunio_manager,1,1,1,1
+manager_access_reunions_sala,reunions.sala,model_reunions_sala,group_reunio_manager,1,1,1,1

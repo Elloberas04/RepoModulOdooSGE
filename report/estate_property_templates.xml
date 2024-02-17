@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+    <template id="report_reunio">
+        <t t-foreach="docs" t-as="property">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div class="oe_structure"/>
+                        <h1>
+                            <span t-field="property.name"/>
+                        </h1>
+                        <div>
+                            <strong>Nom:</strong>
+                            <span t-field="property.name"/>
+                        </div>
+                        <div>
+                            <strong>Descripcio:</strong>
+                        </div>
+                        <div>
+                            <span t-field="property.descripcio"/>
+                        </div>
+                        <div>
+                            <strong>Organitzador:</strong>
+                            <span t-field="property.id_organitzador"/>
+                        </div>
+                        <div>
+                            <strong>Data inci:</strong>
+                            <span t-field="property.data_inici"/>
+                        </div>
+                        <div>
+                            <strong>Data finalització:</strong>
+                            <span t-field="property.data_finalitzacio"/>
+                        </div>
+                        <div>
+                            <strong>Sala:</strong>
+                            <t t-set="offer" t-value="property.mapped('sala')"/>
+                            <div>
+                                <strong>- Nom:</strong>
+                                <span t-field="offer.name"/>
+                            </div>
+                            <div>
+                                <strong>- Capacitat:</strong>
+                                <span t-field="offer.capacitat"/>
+                            </div>
+                            <div>
+                                <strong>- Ubicació:</strong>
+                                <span t-field="offer.ubicacio"/>
+                            </div>
+                        </div>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Participants</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-set="offers" t-value="property.mapped('participants')"/>
+                                <tr t-foreach="offers" t-as="offer">
+                                    <td>
+                                        <span t-field="offer.name"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="offer.work_email"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="offer.work_phone"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="offer.employee_type"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div></div>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Notes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-set="offers" t-value="property.mapped('notes')"/>
+                                <tr t-foreach="offers" t-as="offer">
+                                    <td>
+                                        <span t-field="offer.name"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="offer.descripcio"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div>
+                            <strong>Objectiu:</strong>
+                            <span t-field="property.objectiu"/>
+                        </div>
+                        <div>
+                            <strong>Urgent:</strong>
+<!--                            <xsl:choose>-->
+<!--                                <xsl:when test="property.urgent='true'">-->
+<!--                                    <span>La reunió és urgent.</span>-->
+<!--                                </xsl:when>-->
+<!--                                <xsl:otherwise>-->
+<!--                                    <span>La reunió no és urgent.</span>-->
+<!--                                </xsl:otherwise>-->
+<!--                            </xsl:choose>-->
+
+                            <span t-field="property.urgent"/>
+                        </div>
+                        <div>
+                            <strong>Tipus:</strong>
+                            <span t-field="property.tipus"/>
+                        </div>
+                        <div>
+                            <strong>Estat:</strong>
+                            <span t-field="property.estat"/>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>
