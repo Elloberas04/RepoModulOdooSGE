@@ -257,23 +257,29 @@
             <field name="name">Notes</field>
             <field name="res_model">reunions.nota</field>
             <field name="view_mode">tree,form,search,kanban</field>
+            <field name="context">{'search_default_group_by_reunio': 1}</field>
         </record>
 
 
         <!-- Top menu item -->
-
         <menuitem name="reunions" id="reunions.menu_root"/>
 
-        <!-- menu categories -->
-
+        <!-- Menu vista reunions -->
         <menuitem name="Reunions List" id="reunions.menu_1" parent="reunions.menu_root"
                   action="reunions.action_window"/>
+
+        <!-- Menu vista calendari reunions -->
         <menuitem name="Calendar" id="reunions.calendarMenu_1" parent="reunions.menu_root"
                   action="reunions.reunio_calendar_action_window"/>
 
+        <!-- Menu configuracio -->
         <menuitem name="Configuration" id="reunions.configurationMenu_1" parent="reunions.menu_root"/>
+
+        <!-- Submenu configuracio (vista sales) -->
         <menuitem name="Sala" id="reunions.salaMenu_1" parent="reunions.configurationMenu_1"
                   action="reunions.sala_action_window"/>
+
+        <!-- Submenu configuracio (vista notes) (amb una search default) -->
         <menuitem name="Notes" id="reunions.notaMenu_1" parent="reunions.configurationMenu_1"
                   action="reunions.nota_action_window"/>
 
